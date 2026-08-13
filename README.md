@@ -17,12 +17,18 @@ src/
     cvrp.py                  OR-Tools CVRP model + solver
     route_map.py             folium route-comparison map builder
     flowchart.py             matplotlib supply-planning flowchart
+    entities.py              soldier/vehicle/building stat model, from the
+                             planning document rather than a notebook
 scripts/     thin argparse CLIs calling src/ (run_qlearning, run_ppo,
              solve_cvrp, build_route_map, draw_flowchart)
-docs/        original Korean README + extracted outputs
+docs/        original Korean README + extracted outputs + proposal summary
+  proposal-code/  every other code block from the planning document,
+                  verbatim and unrun — design sketches, not run code
 ```
 
 The notebooks are the original Colab experiments; `src/` is the same code extracted into importable modules (Colab-specific `!pip` cells removed, logic unchanged). The tkinter GUI (`logistics_sim_tkinter_*`) stays notebook-only because it is an interactive desktop GUI, not a library-shaped flow.
+
+Two things in the tree did **not** come from a notebook: `src/supply_sim/entities.py` and everything under `docs/proposal-code/`. Those are the Python the planning document itself carried, kept separate so it is never mistaken for code that ran — see [`docs/proposal-code/README.md`](docs/proposal-code/README.md).
 
 ## Motivation
 
@@ -36,8 +42,14 @@ The notebooks are prototypes of three of those pieces:
 |---|---|
 | RL route model — learn to route around threat zones (Q-learning / DQN / PPO are all named in the document) | `rl_gridworld_qlearning_ppo.ipynb`: tabular Q-learning on a grid with a trap cell, then PPO on a custom `gym.Env`. The trap cell is the threat zone, reduced to its smallest form. |
 | Vehicle and driver assignment — match cargo to vehicles, respect capacity, stagger runs | `ortools_cvrp_supply_routing.ipynb`: CVRP with 2 capacity-3 vehicles over 5 delivery points. Covers the capacity/assignment half; the driver-license priority rule is not modeled. |
-| Interactive UI + soldier stat simulation + before/after threat re-routing | `logistics_sim_tkinter_v1.ipynb` (soldier hunger/health/stress/hygiene against supply stocks, straight out of the document's stat model), `logistics_sim_tkinter_folium_v2.ipynb` (buildings and threats on a folium map), `folium_route_comparison_map.ipynb` (the trained-vs-untrained route figure the document describes). |
+| Interactive UI + soldier stat simulation + before/after threat re-routing | `logistics_sim_tkinter_v1.ipynb` (soldier hunger/health/stress/hygiene against supply stocks — the document's four stat names, though not its mechanics; see below), `logistics_sim_tkinter_folium_v2.ipynb` (buildings and threats on a folium map), `folium_route_comparison_map.ipynb` (the trained-vs-untrained route figure the document describes). |
 | Situation-dependent supply priority (which class ships first) | `combat_supply_flowchart.ipynb` — only as a diagram of the decision process, not as a model. |
+
+The proposal did not stop at describing the stat simulation — it wrote the classes out, and that code is now in the repo at [`src/supply_sim/entities.py`](src/supply_sim/entities.py): `Soldier` with hunger/health/stress/hygiene, `Vehicle` with durability/capacity/fuel, `Building` with durability, each with an `update_stats()` decay tick and an `apply_supply(supply_type)` that dispatches on the Korean supply class number (1 food, 2 bedding/clothing, 3 fuel, 4 construction materials, 5 ammunition, 8 medical, 9 repair parts).
+
+The tkinter simulator implements a **reduced** version of that model rather than the model itself. Its `Soldier` reuses the same four stat names but takes them as constructor arguments alongside a `name`, and its only supply behaviour is `consume_supply()`, which tops up hunger from a food `Supply`. There is no per-tick decay, no dispatch on supply class, and no `Vehicle` or `Building` class at all — buildings in the notebook are `(x, y)` tuples drawn on a canvas. So the vocabulary carried over into the simulator; the decay-and-resupply mechanics, which is what would have produced demand numbers, did not.
+
+The rest of the document's code — a positional revision of the entity classes, three driver loops, two PPO route environments, a `DisasterEnvironment` skeleton, a Keras DQN agent, and a 10×10 grid `MilitaryEnv` — is preserved verbatim and unrun in [`docs/proposal-code/`](docs/proposal-code/), with a per-file note on what is missing from each.
 
 ### What was never built
 
@@ -47,7 +59,8 @@ Being plain about it, most of the proposal exists only on paper:
 - **Consumable-lifetime and failure-risk prediction** ("warn which parts are due, flag emerging risks"). Nothing here predicts anything about a vehicle.
 - **Random Forest demand forecasting.** No supervised model was ever trained; there was no consumption dataset to train it on.
 - **Damage-report ingestion.** The document's own open question — how a damage report actually reaches the system — was never answered beyond "through the UI". Threats in the notebooks are hardcoded.
-- **Soldier-stat-driven demand feeding the router.** The tkinter sim tracks the stats, but its consumption never becomes input to the CVRP or RL side.
+- **Soldier-stat-driven demand feeding the router.** The full stat model exists only as the proposal's own unrun code (`src/supply_sim/entities.py`); the tkinter sim tracks a reduced version of the stats, and its consumption never becomes input to the CVRP or RL side.
+- **A DQN of any kind.** The document sketches two (`docs/proposal-code/08`, `10`) and names DQN throughout; no notebook implements one. The RL work here is tabular Q-learning and PPO.
 - **The layered military map** (terrain, transport network by road surface, CBRN, weather, buildings) and the dynamic-shortest-path recompute with caching. The maps here are a handful of markers and circles.
 - **Everything wartime beyond a threat circle**: the graded contamination model with wind, the close/ranged/area weapon damage bands.
 

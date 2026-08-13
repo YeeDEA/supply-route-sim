@@ -4,7 +4,7 @@
 
 ## How to read the document
 
-The file is two things stacked. The **first part is a raw brainstorming log** — a list of candidate topics with a "tech needed" line under each, written before anything was decided. The **second part is the actual proposal**, restarting under the heading *"주제: 여러 조건 속 군수품 보급 최적화 시스템"* ("Supply optimization system under multiple conditions"), with the standard proposal sections (background, core idea, detail, differentiation, applicability, expected effect) plus an appendix of design notes and prototype code sketches.
+The file is two things stacked. The **first part is a raw brainstorming log** — a list of candidate topics with a "tech needed" line under each, written before anything was decided. The **second part is the actual proposal**, restarting under the heading *"주제: 여러 조건 속 군수품 보급 최적화 시스템"* ("Supply optimization system under multiple conditions"), with the standard proposal sections (background, core idea, detail, differentiation, applicability, expected effect) plus an appendix of design notes and Python code blocks. The code is extracted into the repo — see [Code written into the document](#code-written-into-the-document) below.
 
 I'm keeping the brainstorming part in this summary because the narrowing is the interesting bit: eight or so unrelated defense-AI ideas collapse into one, and the one that survives is the only one where a simulator could stand in for data we didn't have.
 
@@ -67,9 +67,23 @@ Static data (fixed routes) is cached so it isn't recomputed. When an incident is
 
 Damage types the appendix defines for the RL environment: chemical / biological / radiological contamination, graded 1st–3rd degree by epicenter, size, wind speed and direction; and kinetic damage split into close-range (~1m radius), ranged (~10m radius), and area weapons such as missiles, where an area threat can be entered either as a *predicted* location (wide area, large damage) or a *confirmed* location (narrower area, very large damage), with routes recomputed accordingly.
 
-### Prototype code in the appendix
+### Code written into the document
 
-The document carries throwaway Python sketches, not a working system: `Soldier` / `Vehicle` / `Building` classes with `update_stats()` and `apply_supply()`, an `Entity` base class adding x/y coordinates and `move_towards()`, a 100-day loop that issues supply when a stat crosses a threshold, two `gym.Env` skeletons (`PeacefulLogisticsEnv` with a 3-action road-type choice, `WarLogisticsEnv` with a safe/risky/fast route choice) each trained by PPO for 10,000 timesteps, and a Keras DQN agent with replay memory against a 10×10 grid `MilitaryEnv`. A note observes that training everything jointly is too much, so the soldier model should be trained separately and loaded as a fixed input to later training.
+The document is not only prose: roughly the second half carries eleven Python code blocks, interleaved with the design discussion. **All of them are now extracted into this repo** — the entity model at [`../src/supply_sim/entities.py`](../src/supply_sim/entities.py), everything else under [`proposal-code/`](proposal-code/) with a per-file header and an index in [`proposal-code/README.md`](proposal-code/README.md). They are design-stage sketches, not run code; several cannot run at all, and they are preserved unrepaired.
+
+In document order:
+
+1. **The entity model** — `Soldier` (hunger / health / stress / hygiene), `Vehicle` (durability / capacity / fuel), `Building` (durability), each with `update_stats()` for one tick of decay and `apply_supply(supply_type)` dispatching on the supply class number. This is the concrete form of component 5 above: it is where the per-day demand numbers were supposed to come from. Kept importable at `src/supply_sim/entities.py`.
+2. **A positional revision** — an `Entity` base class holding x/y with `distance_to()`, the same three classes re-declared on top of it, and `Soldier.move_towards()` walking one step per call. It drops the stat methods; the document never merges the two revisions.
+3. **Three driver loops** — a 100-day loop ticking one soldier, one vehicle and one building and issuing supply class 1, 3 or 4 when hunger, fuel or durability crosses a threshold; then two near-identical rewrites placing five soldiers against two buildings and two vehicles. Both rewrites instantiate a `SoldierAI` class and call `decide_action()` — **neither is ever defined anywhere in the document**. The prose right after says this is where Q-learning, DQN, a behaviour tree or a decision network would go, so `SoldierAI` marks intent rather than work done. The last copy is also physically damaged (brackets closed mid-comment, lost indentation, and the top-level call pulled inside the loop, making it infinitely recursive).
+4. **Two `gym.Env` route sketches with PPO** — `PeacefulLogisticsEnv` (5-dim Box state; actions paved / unpaved / tunnel) and `WarLogisticsEnv` (6-dim Box state; actions safe / risky / fast), each trained by stable-baselines3 PPO for 10,000 timesteps. In both, the state transition is fresh random noise and `done` is always `False` — so despite the framing they encode a one-shot preference among three labels, not a path through a map.
+5. **`DisasterEnvironment`** — the class meant to carry the supply-*priority* problem the document calls "the most important thing". It is a skeleton: `regions` and `vehicles` are literally `[...]`, and both private methods return names that were never bound.
+6. **A Keras `DQN` agent and its training loop** — 2×24 dense net, 2000-entry replay deque, ε-greedy 1.0 → 0.01, paired with `DisasterEnvironment` for 1000 episodes. It cannot run against that skeleton, and it unpacks `step()` as three values where the gym sketches return four.
+7. **`MilitaryEnv` + `DQNAgent`** — the longest block, fenced as ```` ```python ```` under a heading that credits ChatGPT. A 10×10 grid, five actions (four directions plus wait), −100 for a damage cell, +100 for the goal. Every movement branch in `step()` is `pass`, and the damage and goal checks read fixed cells that `reset()` never marks — so the agent cannot move and the episode cannot end.
+
+A note between the blocks observes that training everything jointly is too much, so the soldier model should be trained separately and loaded as a fixed input to later training.
+
+The shape of the whole appendix is worth stating plainly: the parts that are complete are the ones that needed no environment (the stat model, the textbook DQN agent), and every block that had to represent the actual map, the actual soldier decision, or the actual priority ranking is a stub.
 
 ## Stated intended impact
 
