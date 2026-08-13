@@ -1,0 +1,7 @@
+numpy>=1.24
+matplotlib>=3.7
+folium>=0.14
+ortools>=9.7
+pillow>=10.0
+gym>=0.26
+stable-baselines3>=2.0

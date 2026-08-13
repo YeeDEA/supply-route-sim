@@ -1,0 +1,12 @@
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+*.pth
+*.ckpt
+.venv/
+venv/
+.DS_Store
+Thumbs.db
+# generated at runtime by the notebooks
+military_simulation_map.html
+military_route_learning_comparison_with_popups.html

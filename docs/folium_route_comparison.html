@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_77f44448873c2c19ceb81165943d30c0 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_77f44448873c2c19ceb81165943d30c0" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_77f44448873c2c19ceb81165943d30c0 = L.map(
+                "map_77f44448873c2c19ceb81165943d30c0",
+                {
+                    center: [37.58, 126.98],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 14,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_aeb89e139bbc0740fe3b6001ced4d7e7 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_aeb89e139bbc0740fe3b6001ced4d7e7.addTo(map_77f44448873c2c19ceb81165943d30c0);
+        
+    
+            var marker_8b04cb0d318c9295f1a51f622492d4df = L.marker(
+                [37.5826, 126.9667],
+                {}
+            ).addTo(map_77f44448873c2c19ceb81165943d30c0);
+        
+    
+            var icon_9a9ca38a990f37cbc90afe11c10e6794 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_8b04cb0d318c9295f1a51f622492d4df.setIcon(icon_9a9ca38a990f37cbc90afe11c10e6794);
+        
+    
+        var popup_cbce92d9e576ccfdd6fc6122329d6212 = L.popup({"autoClose": false, "maxWidth": "100%"});
+
+        
+            
+                var html_e852a396feb51e1c01bbcd6efd00bbce = $(`<div id="html_e852a396feb51e1c01bbcd6efd00bbce" style="width: 100.0%; height: 100.0%;"><b>Barracks (옥인동)</b><br>Coordinates: [37.5826, 126.9667]</div>`)[0];
+                popup_cbce92d9e576ccfdd6fc6122329d6212.setContent(html_e852a396feb51e1c01bbcd6efd00bbce);
+            
+        
+
+        marker_8b04cb0d318c9295f1a51f622492d4df.bindPopup(popup_cbce92d9e576ccfdd6fc6122329d6212)
+        .openPopup();
+
+        
+    
+    
+            var marker_cccc5fa27da1de57e56a35f6e7ef8d0e = L.marker(
+                [37.5697, 126.9696],
+                {}
+            ).addTo(map_77f44448873c2c19ceb81165943d30c0);
+        
+    
+            var icon_f17e66797cd2d78c00371f722af1d0c0 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_cccc5fa27da1de57e56a35f6e7ef8d0e.setIcon(icon_f17e66797cd2d78c00371f722af1d0c0);
+        
+    
+        var popup_bcc2c1cb15e2e36374febc88c7b0e328 = L.popup({"autoClose": false, "maxWidth": "100%"});
+
+        
+            
+                var html_099db58cdff9f7f0aaeae3617ffaf1ee = $(`<div id="html_099db58cdff9f7f0aaeae3617ffaf1ee" style="width: 100.0%; height: 100.0%;"><b>Supply Depot (신문로1가)</b><br>Coordinates: [37.5697, 126.9696]</div>`)[0];
+                popup_bcc2c1cb15e2e36374febc88c7b0e328.setContent(html_099db58cdff9f7f0aaeae3617ffaf1ee);
+            
+        
+
+        marker_cccc5fa27da1de57e56a35f6e7ef8d0e.bindPopup(popup_bcc2c1cb15e2e36374febc88c7b0e328)
+        .openPopup();
+
+        
+    
+    
+            var marker_70c568c557ab207a081b4a323978d07f = L.marker(
+                [37.5838, 126.9811],
+                {}
+            ).addTo(map_77f44448873c2c19ceb81165943d30c0);
+        
+    
+            var icon_84e708f98e61308ac91ab50c1265d564 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_70c568c557ab207a081b4a323978d07f.setIcon(icon_84e708f98e61308ac91ab50c1265d564);
+        
+    
+        var popup_abfa14018b2183a7260918ca04fb9d84 = L.popup({"autoClose": false, "maxWidth": "100%"});
+
+        
+            
+                var html_ab5fc013b226f9a8719c258b7c56f07b = $(`<div id="html_ab5fc013b226f9a8719c258b7c56f07b" style="width: 100.0%; height: 100.0%;"><b>Command HQ (소격동)</b><br>Coordinates: [37.5838, 126.9811]</div>`)[0];
+                popup_abfa14018b2183a7260918ca04fb9d84.setContent(html_ab5fc013b226f9a8719c258b7c56f07b);
+            
+        
+
+        marker_70c568c557ab207a081b4a323978d07f.bindPopup(popup_abfa14018b2183a7260918ca04fb9d84)
+        .openPopup();
+
+        
+    
+    
+            var circle_5fe74d0193f1b7a1751d6392f253aa92 = L.circle(
+                [37.5742, 126.9706],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 300, "stroke": true, "weight": 3}
+            ).addTo(map_77f44448873c2c19ceb81165943d30c0);
+        
+    
+        var popup_35443cdb9bccfd779c53d9c3f0730ca8 = L.popup({"autoClose": false, "maxWidth": "100%"});
+
+        
+            
+                var html_4ea46fb072fa0814c2c36c2caed5c735 = $(`<div id="html_4ea46fb072fa0814c2c36c2caed5c735" style="width: 100.0%; height: 100.0%;"><b>Threat: Missile Threat (미사일 위협)</b><br>Type: Explosive<br>Range: 300m<br>Damage: High</div>`)[0];
+                popup_35443cdb9bccfd779c53d9c3f0730ca8.setContent(html_4ea46fb072fa0814c2c36c2caed5c735);
+            
+        
+
+        circle_5fe74d0193f1b7a1751d6392f253aa92.bindPopup(popup_35443cdb9bccfd779c53d9c3f0730ca8)
+        .openPopup();
+
+        
+    
+    
+            var circle_b8b017863bf74f055719812f767effa6 = L.circle(
+                [37.574, 126.992],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 200, "stroke": true, "weight": 3}
+            ).addTo(map_77f44448873c2c19ceb81165943d30c0);
+        
+    
+        var popup_f337e1feb776d1ac22a758b35c3d4e31 = L.popup({"autoClose": false, "maxWidth": "100%"});
+
+        
+            
+                var html_80c69dfdaedcf4bcf662364842fa582b = $(`<div id="html_80c69dfdaedcf4bcf662364842fa582b" style="width: 100.0%; height: 100.0%;"><b>Threat: Sniper Zone (스나이퍼 존)</b><br>Type: Ballistic<br>Range: 200m<br>Damage: Medium</div>`)[0];
+                popup_f337e1feb776d1ac22a758b35c3d4e31.setContent(html_80c69dfdaedcf4bcf662364842fa582b);
+            
+        
+
+        circle_b8b017863bf74f055719812f767effa6.bindPopup(popup_f337e1feb776d1ac22a758b35c3d4e31)
+        .openPopup();
+
+        
+    
+    
+            var poly_line_cfd44fd1b1a4906492238b9cf6a21fda = L.polyline(
+                [[37.5826, 126.9667], [37.581, 126.97], [37.581, 126.97], [37.579, 126.972], [37.577, 126.974], [37.575, 126.975], [37.573, 126.973], [37.57, 126.971], [37.5697, 126.9696], [37.572, 126.976], [37.575, 126.977], [37.578, 126.979], [37.5838, 126.9811]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_77f44448873c2c19ceb81165943d30c0);
+        
+    
+        var popup_5d1c5ad01b15c6cdcd73a25fb0f65fee = L.popup({"autoClose": false, "maxWidth": "100%"});
+
+        
+            
+                var html_4e8bdf31ce75b35ac253198fdf9c77cf = $(`<div id="html_4e8bdf31ce75b35ac253198fdf9c77cf" style="width: 100.0%; height: 100.0%;">Low AI Learning - Near Missile Threat</div>`)[0];
+                popup_5d1c5ad01b15c6cdcd73a25fb0f65fee.setContent(html_4e8bdf31ce75b35ac253198fdf9c77cf);
+            
+        
+
+        poly_line_cfd44fd1b1a4906492238b9cf6a21fda.bindPopup(popup_5d1c5ad01b15c6cdcd73a25fb0f65fee)
+        .openPopup();
+
+        
+    
+    
+            var poly_line_ed5dff5559963516c56ac10fb0c609b0 = L.polyline(
+                [[37.5826, 126.9667], [37.581, 126.968], [37.579393, 126.968517], [37.578, 126.968], [37.576, 126.967], [37.574, 126.965], [37.572, 126.965], [37.5697, 126.9696], [37.571, 126.974], [37.573, 126.976], [37.575, 126.978], [37.5838, 126.9811]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_77f44448873c2c19ceb81165943d30c0);
+        
+    
+        var popup_c7b0562626342ce290556b632430dd9d = L.popup({"autoClose": false, "maxWidth": "100%"});
+
+        
+            
+                var html_d92c5eb2dd4dd1fced20d27e911e96eb = $(`<div id="html_d92c5eb2dd4dd1fced20d27e911e96eb" style="width: 100.0%; height: 100.0%;">High AI Learning - Avoiding Missile Threat</div>`)[0];
+                popup_c7b0562626342ce290556b632430dd9d.setContent(html_d92c5eb2dd4dd1fced20d27e911e96eb);
+            
+        
+
+        poly_line_ed5dff5559963516c56ac10fb0c609b0.bindPopup(popup_c7b0562626342ce290556b632430dd9d)
+        .openPopup();
+
+        
+    
+    
+            tile_layer_aeb89e139bbc0740fe3b6001ced4d7e7.addTo(map_77f44448873c2c19ceb81165943d30c0);
+        
+</script>
+</html>
