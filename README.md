@@ -4,7 +4,7 @@
 
 Supply route planning experiments: the same problem — getting supplies from a depot to units while avoiding threat zones — attacked three different ways: reinforcement learning on a gridworld, classical optimization with OR-Tools (CVRP), and an interactive GUI/map simulator.
 
-These notebooks were the exploratory work behind an entry for the 2024 1st Defense AI Ideathon (제1회 국방 AI 아이디어톤). The submitted proposal document is not preserved here, so this repo is the code side of that effort only.
+These notebooks were the exploratory work behind an entry for the 2024 1st Defense AI Ideathon (제1회 국방 AI 아이디어톤). The planning document behind them is summarized in [`docs/proposal-summary.md`](docs/proposal-summary.md); this repo is the code side of that effort.
 
 ## Repository structure
 
@@ -27,6 +27,29 @@ The notebooks are the original Colab experiments; `src/` is the same code extrac
 ## Motivation
 
 The problem comes from my military service: planning supply runs when parts of the map are effectively off-limits. Everything here is a **synthetic scenario** — the maps use arbitrary points in downtown Seoul as stand-ins, and no real military data, facility locations, or routes appear anywhere.
+
+The planning document ([summary](docs/proposal-summary.md)) started as a brainstorming list of unrelated defense-AI ideas and converged on one: a supply-distribution optimizer that runs in two modes, peacetime and wartime. The argument in it is budgetary rather than tactical — some items get over-ordered while things actually needed arrive late, and manual planning degrades exactly when the situation stops being predictable. The proposed system was six pieces: an interactive map UI where a reporter pins an incident and that incident becomes a routing obstacle; an RL route model weighted by terrain, weather, travel time and contamination; a supervised (Random Forest) demand forecaster driving peacetime stocking; an RL priority-weighting model that reorders supply classes by situation (ammunition in wartime, food and clothing in peacetime, medical after a strike); a soldier/vehicle/building stat simulation that generates the demand numbers; and a vehicle-and-driver assignment step constrained by how many drivers exist.
+
+The notebooks are prototypes of three of those pieces:
+
+| Proposal component | Prototyped by |
+|---|---|
+| RL route model — learn to route around threat zones (Q-learning / DQN / PPO are all named in the document) | `rl_gridworld_qlearning_ppo.ipynb`: tabular Q-learning on a grid with a trap cell, then PPO on a custom `gym.Env`. The trap cell is the threat zone, reduced to its smallest form. |
+| Vehicle and driver assignment — match cargo to vehicles, respect capacity, stagger runs | `ortools_cvrp_supply_routing.ipynb`: CVRP with 2 capacity-3 vehicles over 5 delivery points. Covers the capacity/assignment half; the driver-license priority rule is not modeled. |
+| Interactive UI + soldier stat simulation + before/after threat re-routing | `logistics_sim_tkinter_v1.ipynb` (soldier hunger/health/stress/hygiene against supply stocks, straight out of the document's stat model), `logistics_sim_tkinter_folium_v2.ipynb` (buildings and threats on a folium map), `folium_route_comparison_map.ipynb` (the trained-vs-untrained route figure the document describes). |
+| Situation-dependent supply priority (which class ships first) | `combat_supply_flowchart.ipynb` — only as a diagram of the decision process, not as a model. |
+
+### What was never built
+
+Being plain about it, most of the proposal exists only on paper:
+
+- **DELLIS / DTIS integration** — the whole "read real consumption and mileage records" premise. No integration, no API, no data.
+- **Consumable-lifetime and failure-risk prediction** ("warn which parts are due, flag emerging risks"). Nothing here predicts anything about a vehicle.
+- **Random Forest demand forecasting.** No supervised model was ever trained; there was no consumption dataset to train it on.
+- **Damage-report ingestion.** The document's own open question — how a damage report actually reaches the system — was never answered beyond "through the UI". Threats in the notebooks are hardcoded.
+- **Soldier-stat-driven demand feeding the router.** The tkinter sim tracks the stats, but its consumption never becomes input to the CVRP or RL side.
+- **The layered military map** (terrain, transport network by road surface, CBRN, weather, buildings) and the dynamic-shortest-path recompute with caching. The maps here are a handful of markers and circles.
+- **Everything wartime beyond a threat circle**: the graded contamination model with wind, the close/ranged/area weapon damage bands.
 
 ## Three approaches to one problem
 
