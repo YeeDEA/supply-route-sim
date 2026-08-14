@@ -1,6 +1,6 @@
 # Proposal summary — "Supply Optimization Under Multiple Conditions"
 
-*Source: my team's planning document for the 2024 1st Defense AI Ideathon (제1회 국방 AI 아이디어톤). Summarized in English; the document itself is not in this repo. Names removed.*
+*Source: my team's planning document for the 2024 1st Defense AI Ideathon (제1회 국방 AI 아이디어톤). Summarized in English; the document itself is not in this repo. Names removed, and anything service-specific is kept at the conceptual level.*
 
 ## How to read the document
 
@@ -18,7 +18,7 @@ From the brainstorming section, roughly in order:
 - **Battlefield medical triage** and **cybersecurity** (listed as one-liners).
 - **Friend-or-foe weapon interlock** — a detachable IFF unit gating a rifle, plus marking friendly/hostile in CCTV footage. Explicitly annotated as *not AI*.
 - **CBRN contamination mapping** — assess contamination severity and predict the plume's path on a map.
-- **Compromised-countersign detection** during base defense, auto-broadcasting the backup countersign.
+- **Base-security credential handling** — detect when an access credential has been compromised and roll it over automatically.
 - **Wartime transport-support prioritization** — list what transport is needed and rank it.
 
 A note in the middle asks whether any single AI technique spans several of these. The answer the team converges on: a map + weather + situation simulator, into which you enter units and supply constraints and get back an optimal allocation. That becomes the chosen topic.
